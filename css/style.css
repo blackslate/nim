@@ -8,4 +8,7 @@ body {
 .matches img{
   width: 1em;
   height: 10em;
+  padding: 1em;
+  background: gray;
+  border-radius: 1.5em;
 }
