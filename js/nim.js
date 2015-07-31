@@ -1,19 +1,36 @@
 ;(function() {
   var active
+  var rowCount
 
   document.body.onclick = hideMatch
 
   function hideMatch(event) {
     var match = event.target
+    
     if (match.nodeName !== "IMG") {
       return
     } else if (match.className === "removed") {
+      return
+    } else if (rowsDontMatch(match)) {
       return
     }
     
     match.classList.add("removed")
 
     active.classList.add("enabled")
+  }
+
+  function rowsDontMatch(match) {
+    var matchCount = match.parentElement.childElementCount
+    if (rowCount) {
+      if (rowCount !== matchCount) {
+        return true
+      }
+    } else {
+      rowCount = matchCount
+    }
+
+    return false
   }
 
   function reset() {
@@ -36,6 +53,8 @@
 
     active = next
     active.classList.add("active")
+
+    rowCount = 0
   }
 
   ;(function initializeTurns() {
