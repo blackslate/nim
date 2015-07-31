@@ -1,5 +1,18 @@
-document.body.onclick = function (event) {
-  event.target.classList.add("removed")
+var active // turns > div class="playerX active"
+
+document.body.onclick = hideMatch
+
+function hideMatch(event) {
+  var match = event.target
+  if (match.nodeName !== "IMG") {
+    return
+  } else if (match.className === "removed") {
+    return
+  }
+  
+  match.classList.add("removed")
+
+  active.classList.add("enabled")
 }
 
 function reset() {
@@ -10,3 +23,33 @@ function reset() {
     match.classList.remove("removed")
   }
 }
+
+function nextTurn() {
+  if (!active.classList.contains("enabled")) {
+    return
+  }
+
+  var next = document.querySelector(".turns div:not(.active)")
+  active.classList.remove("active")
+  active.classList.remove("enabled")
+
+  active = next
+  active.classList.add("active")
+}
+
+function initializeTurns() {
+  var turnButtons = document.querySelectorAll(".turns button")
+  var button
+
+  for (var ii=0; ii<turnButtons.length; ii++) {
+    button = turnButtons[ii]
+    button.onclick = nextTurn
+
+    if (ii === 0) {
+      active = button.parentElement
+      active.classList.add("active")
+    }
+  }
+}
+
+initializeTurns()

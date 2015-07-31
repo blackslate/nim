@@ -47,3 +47,6 @@ div.turns {
 .turns :not(.active) button {
   display: none;
 }
+.active:not(.enabled) button {
+  opacity: 0.2;
+}
